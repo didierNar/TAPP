@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.luchobolivar.tapp.MainActivity"
+    tools:context="didiernarvaez.eam.tapp.MainActivity"
     android:background="@drawable/background"
     android:orientation="vertical">
 
