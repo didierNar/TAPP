@@ -1,4 +1,4 @@
-package didiernarvaez.eam.tapp;
+package didiernarvaez.eam.tapp.Entidades;
 
 /**
  * Created by Didier_Narváez on 18/05/2017.

@@ -1,4 +1,4 @@
-package didiernarvaez.eam.tapp.Entidades;
+package didiernarvaez.eam.tapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-
     public void rutas(View v){
 
         Intent intent = new Intent(this, RutasActivity.class);
@@ -23,10 +22,4 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    public void localizacionRutas(View v){
-
-        Intent intent = new Intent(this, GPSActivity.class);
-        startActivity(intent);
-
-    }
 }

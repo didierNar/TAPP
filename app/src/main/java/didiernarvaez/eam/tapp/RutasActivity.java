@@ -1,4 +1,4 @@
-package didiernarvaez.eam.tapp.Entidades;
+package didiernarvaez.eam.tapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,8 @@ import android.widget.Spinner;
 
 import java.util.List;
 
-import didiernarvaez.eam.tapp.DireccionIP;
-import didiernarvaez.eam.tapp.R;
+import didiernarvaez.eam.tapp.Entidades.DireccionIP;
+import didiernarvaez.eam.tapp.Entidades.Rutas;
 
 public class RutasActivity extends AppCompatActivity {
 

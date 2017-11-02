@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import didiernarvaez.eam.tapp.Entidades.MenuActivity;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,7 +16,16 @@ public class MainActivity extends AppCompatActivity {
     public void infoRutas(View view){
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
+    }
 
+    public void abrirRegistro (View v){
+        Intent i = new Intent(this, RegistroUsuario.class);
+        startActivity(i);
+    }
+
+    public void abrirLogIn (View v){
+        Intent i = new Intent(this, LogIn.class);
+        startActivity(i);
     }
 
 }
