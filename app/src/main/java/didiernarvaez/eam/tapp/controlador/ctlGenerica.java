@@ -30,7 +30,7 @@ import didiernarvaez.eam.tapp.Entidades.DireccionIP;
  * Created by Didier_Narváez on 26/09/2017.
  */
 
-public class ctlGenerica extends AsyncTask<String, Void, String>  {
+public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
 
     public AsyncResponse delegate = null;
 
@@ -55,7 +55,7 @@ public class ctlGenerica extends AsyncTask<String, Void, String>  {
     }
 
     @Override
-    protected String doInBackground(String... voids) {
+    protected Boolean doInBackground(Void... voids) {
         //Se define un objeto para la conexión
         HttpURLConnection conn = null;
         //Se define un buffer para leer los resultados de la conexión
@@ -80,7 +80,7 @@ public class ctlGenerica extends AsyncTask<String, Void, String>  {
             //Se codificacan los datos añadidos con
             String query = builder.build().getEncodedQuery();
 
-            //Log.e("query", query);
+            Log.e("query", query);
 
             //Se define un OtputStream para añadir los datos definidos a la conexión
             OutputStream os = conn.getOutputStream();
@@ -127,11 +127,11 @@ public class ctlGenerica extends AsyncTask<String, Void, String>  {
         } catch (MalformedURLException e) {
             //publishProgress("Error mal estructura URL " + e.getMessage());
             e.printStackTrace();
-            //return false;
+            return false;
         } catch (IOException i) {
             //publishProgress("Error IO " + i.getMessage());
             i.printStackTrace();
-            //return false;
+            return false;
         } finally {
             //Desconecta la conexión activa
             if (conn != null) {
@@ -145,10 +145,10 @@ public class ctlGenerica extends AsyncTask<String, Void, String>  {
             } catch (IOException e) {
                 //publishProgress("Error al final " + e.getMessage());
                 e.printStackTrace();
-                //return false;
+                return false;
             }
         }
-        return null;
+        return true;
     }
 
    /** @Override
@@ -157,15 +157,17 @@ public class ctlGenerica extends AsyncTask<String, Void, String>  {
     }
 **/
     @Override
-    protected void onPostExecute(String result) {
-        try {
-            JSONArray jsonArray = new JSONArray(buffer.toString());
-            for (int i=0; i<jsonArray.length();i++){
-                JSONObject json = jsonArray.getJSONObject(i);
-                delegate.processFinish(json);
+    protected void onPostExecute(Boolean result) {
+        if (result) {
+            try {
+                JSONArray jsonArray = new JSONArray(buffer.toString());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject json = jsonArray.getJSONObject(i);
+                    delegate.processFinish(json);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }catch (JSONException e){
-            e.printStackTrace();
         }
     }
         // Se oculta la barra de carga

@@ -9,7 +9,7 @@ public class DireccionIP {
     private static String ip;
 
     public static String getIp() {
-        return "http://192.168.0.13/prueba/parcial.php";
+        return "http://192.168.137.1/tapp/crudUsuario.php";
     }
 
     public static void setIp(String ip) {
