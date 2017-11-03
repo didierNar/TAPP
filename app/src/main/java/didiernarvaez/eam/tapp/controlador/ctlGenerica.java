@@ -23,13 +23,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import didiernarvaez.eam.tapp.Entidades.AsyncResponse;
 import didiernarvaez.eam.tapp.Entidades.DireccionIP;
 
 /**
  * Created by Didier_Narváez on 26/09/2017.
  */
 
-public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
+public class ctlGenerica extends AsyncTask<String, Void, String>  {
+
+    public AsyncResponse delegate = null;
 
     //Variable que almacena el resultado del servidor
     private StringBuffer buffer = null;
@@ -37,31 +40,22 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
     //Objeto
     private Object objeto;
 
-    //El tipo de acción (POST o GET ...)
-    private String tipoAccion;
-
     //Variable que almacena la acción que se realiza en el servidor
     private String accion;
 
     //URL en la que se realizará la petición
     private final String ruta = DireccionIP.getIp();
 
-    //Referencia de la activity que envió la solicitud para mostrar el TOAST
-    Activity activity;
-
     //Referencia a la barra de carga
    // ProgressBar carga;
 
-    public ctlGenerica(Object obj, String accion, String tipoAccion,
-                       Activity activity) {
+    public ctlGenerica(Object obj, String accion) {
         this.accion = accion;
-        this.activity = activity;
         this.objeto = obj;
-        this.tipoAccion = tipoAccion;
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
+    protected String doInBackground(String... voids) {
         //Se define un objeto para la conexión
         HttpURLConnection conn = null;
         //Se define un buffer para leer los resultados de la conexión
@@ -74,7 +68,7 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
             //Se añada la URL a la conexión
             conn = (HttpURLConnection) url.openConnection();
             //Se define el tipo de conexión (GET o POST)
-            conn.setRequestMethod(tipoAccion);
+            conn.setRequestMethod("POST");
 
             Gson gson = new Gson();
             String strJson = gson.toJson(objeto);
@@ -86,7 +80,7 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
             //Se codificacan los datos añadidos con
             String query = builder.build().getEncodedQuery();
 
-            Log.e("query", query);
+            //Log.e("query", query);
 
             //Se define un OtputStream para añadir los datos definidos a la conexión
             OutputStream os = conn.getOutputStream();
@@ -108,7 +102,7 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
             //Se conecta, recibe datos y los lee
             //Se ejecuta la conexión
 
-            publishProgress("Se envian los datos");
+            //publishProgress("Se envian los datos");
             conn.connect();
 
             //con un input stream se obtienen los datos de la conexión
@@ -131,13 +125,13 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
 
 
         } catch (MalformedURLException e) {
-            publishProgress("Error mal estructura URL " + e.getMessage());
+            //publishProgress("Error mal estructura URL " + e.getMessage());
             e.printStackTrace();
-            return false;
+            //return false;
         } catch (IOException i) {
-            publishProgress("Error IO " + i.getMessage());
+            //publishProgress("Error IO " + i.getMessage());
             i.printStackTrace();
-            return false;
+            //return false;
         } finally {
             //Desconecta la conexión activa
             if (conn != null) {
@@ -149,28 +143,38 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
                     reader.close();
                 }
             } catch (IOException e) {
-                publishProgress("Error al final " + e.getMessage());
+                //publishProgress("Error al final " + e.getMessage());
                 e.printStackTrace();
-                return false;
+                //return false;
             }
         }
-        return true;
+        return null;
     }
 
-    @Override
+   /** @Override
     protected void onProgressUpdate(String... values) {
         Toast.makeText(activity, values[0], Toast.LENGTH_SHORT).show();
     }
-
+**/
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(String result) {
+        try {
+            JSONArray jsonArray = new JSONArray(buffer.toString());
+            for (int i=0; i<jsonArray.length();i++){
+                JSONObject json = jsonArray.getJSONObject(i);
+                delegate.processFinish(json);
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
         // Se oculta la barra de carga
         //carga.setVisibility(View.INVISIBLE);
-        try {
+        /**try {
             if (result) {
 
                 if (accion.equals("registrar")) {
-                /*Como el resultado obtenido es un array JSON, se pasa el string JSON al array*/
+                //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
                     JSONObject jsonObject = new JSONObject(buffer.toString());
                     String res = jsonObject.getString("registro");
                     if (res.equals("1")) {
@@ -181,7 +185,7 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
                 }
 
                 if (accion.equals("eliminar")) {
-                /*Como el resultado obtenido es un array JSON, se pasa el string JSON al array*/
+                //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
                     JSONObject jsonObject = new JSONObject(buffer.toString());
                     String res = jsonObject.getString("eliminar");
                     if (res.equals("1")) {
@@ -192,7 +196,7 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
                 }
 
                 if (accion.equals("editar")) {
-                /*Como el resultado obtenido es un array JSON, se pasa el string JSON al array*/
+                //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
                     JSONObject jsonObject = new JSONObject(buffer.toString());
                     String res = jsonObject.getString("editado");
                     if (res.equals("1")) {
@@ -220,7 +224,7 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
                         Consignar.encontrado = true;
 
                     }
-                } **/
+                }
 
                 if (accion.equals("listar")) {
 
@@ -235,7 +239,7 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
                         String tipo = row.getString("tipo");
 
                         /**Cuenta c = new Cuenta(cod, monto, tipo);
-                        cuentas.add(c); **/
+                        cuentas.add(c);
                     }
 
                 }
@@ -248,6 +252,6 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
                     Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-    }
+    } **/
 
 }

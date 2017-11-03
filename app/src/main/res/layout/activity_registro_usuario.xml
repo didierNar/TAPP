@@ -102,5 +102,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
+        android:onClick="registrarUsuario"
         android:text="REGISTRAR" />
 </LinearLayout>

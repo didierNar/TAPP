@@ -5,7 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import didiernarvaez.eam.tapp.Entidades.AsyncResponse;
+
+public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,4 +33,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    @Override
+    public void processFinish(JSONObject output) throws JSONException {
+
+    }
 }

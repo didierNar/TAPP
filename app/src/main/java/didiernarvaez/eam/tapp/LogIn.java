@@ -17,4 +17,7 @@ public class LogIn extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassLogIn);
 
     }
+
+
+
 }
