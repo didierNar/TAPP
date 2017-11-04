@@ -9,15 +9,25 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String correo;
+    private String celular;
     private String username;
     private String contrasenia;
 
-    public Usuario(String nombre, String apellido, String correo, String username, String contrasenia) {
+    public Usuario(String nombre, String apellido, String correo, String celular, String username, String contrasenia) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
+        this.celular = celular;
         this.username = username;
         this.contrasenia = contrasenia;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 
     public String getNombre() {

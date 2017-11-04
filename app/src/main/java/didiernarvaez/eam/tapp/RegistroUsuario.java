@@ -15,7 +15,7 @@ import didiernarvaez.eam.tapp.controlador.ctlGenerica;
 
 public class RegistroUsuario extends AppCompatActivity implements AsyncResponse {
 
-    EditText etNombre, etApellido, etCorreo, etUserName, etPassword;
+    EditText etNombre, etApellido, etCorreo, etUserName, etPassword, etCelular;
     ctlGenerica controller;
 
     @Override
@@ -26,6 +26,7 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
         etNombre = (EditText) findViewById(R.id.etNombreReg);
         etApellido = (EditText) findViewById(R.id.etApellidoReg);
         etCorreo = (EditText) findViewById(R.id.etCorreoReg);
+        etCelular = (EditText) findViewById(R.id.etCelular);
         etUserName = (EditText) findViewById(R.id.etUserNameReg);
         etPassword = (EditText) findViewById(R.id.etPassReg);
 
@@ -35,6 +36,7 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
         String nombre = etNombre.getText().toString();
         String apellido = etApellido.getText().toString();
         String correo = etCorreo.getText().toString();
+        String celular = etCelular.getText().toString();
         String username = etUserName.getText().toString();
         String pass = etPassword.getText().toString();
 
@@ -42,7 +44,7 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
             Toast.makeText(this, "Debe ingresar los campos obligatorios", Toast.LENGTH_SHORT).show();
         } else {
 
-            Usuario u = new Usuario(nombre, apellido, correo, username, pass);
+            Usuario u = new Usuario(nombre, apellido, correo, celular, username, pass);
             controller = new ctlGenerica(u, "registrar");
             controller.execute();
 

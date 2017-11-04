@@ -68,12 +68,12 @@
         android:layout_weight="0.11" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/etCelular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="phone"
-        android:hint="Celular" />
+        android:hint="Celular"
+        android:inputType="phone" />
 
     <Space
         android:layout_width="match_parent"
