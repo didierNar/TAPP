@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegistroUsuario" />
-        <activity android:name=".LogIn"></activity>
+        <activity android:name=".LogInActivity"></activity>
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import didiernarvaez.eam.tapp.Entidades.AsyncResponse;
 
-public class MainActivity extends AppCompatActivity implements AsyncResponse {
+public class  MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     public void abrirLogIn (View v){
-        Intent i = new Intent(this, LogIn.class);
+        Intent i = new Intent(this, LogInActivity.class);
         startActivity(i);
     }
 

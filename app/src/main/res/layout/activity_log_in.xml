@@ -65,5 +65,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:text="INICIAR SESIÓN" />
+        android:text="INICIAR SESIÓN"
+        android:onClick="logIn"/>
 </LinearLayout>
