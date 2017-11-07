@@ -40,7 +40,8 @@ public class  MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     @Override
-    public void arrayProcessFinish(JSONArray jsonArray) throws JSONException {
+    public void processFinishList(JSONArray output) throws JSONException {
 
     }
+
 }

@@ -37,6 +37,7 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
     }
 
     public void registrarUsuario (View v){
+
         String nombre = etNombre.getText().toString();
         String apellido = etApellido.getText().toString();
         String correo = etCorreo.getText().toString();
@@ -50,6 +51,7 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
 
             Usuario u = new Usuario(nombre, apellido, correo, celular, username, pass);
             controller = new ctlGenerica(u, "registrar");
+            controller.delegate = this;
             controller.execute();
 
         }
@@ -70,11 +72,14 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
             etCorreo.setText("");
             etPassword.setText("");
             etUserName.setText("");
+        } else{
+            Toast.makeText(this, "Registro Fallido", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void arrayProcessFinish(JSONArray jsonArray) throws JSONException {
+    public void processFinishList(JSONArray output) throws JSONException {
 
     }
+
 }

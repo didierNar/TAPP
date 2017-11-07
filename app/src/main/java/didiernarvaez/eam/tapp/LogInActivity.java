@@ -3,7 +3,6 @@ package didiernarvaez.eam.tapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,7 +19,7 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
 
     EditText etUserName, etPassword;
 
-    ctlGenerica ctlGenerica;
+    ctlGenerica controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +32,20 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
     }
 
     public void logIn (View view){
-        if(etUserName.getText().equals("") || etPassword.getText().equals("")) {
 
-            String userName = etUserName.getText().toString();
-            String pass = etPassword.getText().toString();
+        String userName = etUserName.getText().toString();
+        String pass = etPassword.getText().toString();
+
+        if(userName.isEmpty() || pass.isEmpty()) {
+
+            Toast.makeText(this, "Debe Ingresar los datos para el inicion de sesion", Toast.LENGTH_SHORT).show();
+
+        }else{
 
             LogIn log = new LogIn(userName, pass);
-            ctlGenerica = new ctlGenerica(log, "LogIn");
-            ctlGenerica.execute();
+            controller = new ctlGenerica(log, "LogIn");
+            controller.delegate = this;
+            controller.execute();
 
         }
 
@@ -50,16 +55,17 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
     public void processFinish(JSONObject output) throws JSONException {
 
         String res = output.getString("registro");
-        Log.e(res, " respuestaaaaaaaaaaa");
 
         if (res.equals("1")){
             Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
+        } else {
+            Toast.makeText(this, "El nombre de usuario o contraseña estan erroneas", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void arrayProcessFinish(JSONArray jsonArray) throws JSONException {
+    public void processFinishList(JSONArray output) throws JSONException {
 
     }
 

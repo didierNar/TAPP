@@ -11,5 +11,5 @@ import org.json.JSONObject;
 public interface AsyncResponse {
     void processFinish(JSONObject output) throws JSONException;
 
-    void arrayProcessFinish(JSONArray jsonArray) throws JSONException;
+    void processFinishList(JSONArray output) throws JSONException;
 }
