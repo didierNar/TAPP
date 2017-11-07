@@ -1,10 +1,8 @@
 package didiernarvaez.eam.tapp.controlador;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -30,7 +28,7 @@ import didiernarvaez.eam.tapp.Entidades.DireccionIP;
  * Created by Didier_Narváez on 26/09/2017.
  */
 
-public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
+public class ctlGenerica extends AsyncTask<Void, String, Boolean> {
 
     public AsyncResponse delegate = null;
 
@@ -47,7 +45,7 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
     private final String ruta = DireccionIP.getIp();
 
     //Referencia a la barra de carga
-   // ProgressBar carga;
+    // ProgressBar carga;
 
     public ctlGenerica(Object obj, String accion) {
         this.accion = accion;
@@ -151,109 +149,121 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean>  {
         return true;
     }
 
-   /** @Override
-    protected void onProgressUpdate(String... values) {
-        Toast.makeText(activity, values[0], Toast.LENGTH_SHORT).show();
-    }
-**/
+    /**
+     * @Override protected void onProgressUpdate(String... values) {
+     * Toast.makeText(activity, values[0], Toast.LENGTH_SHORT).show();
+     * }
+     **/
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
             try {
-                JSONArray jsonArray = new JSONArray(buffer.toString());
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject json = jsonArray.getJSONObject(i);
-                    delegate.processFinish(json);
+                String res = buffer.toString();
+                JSONObject jsonRes = new JSONObject(res);
+
+                if (jsonRes.has("registro")) {
+
+                    delegate.processFinish(jsonRes);
+
+                } else {
+
+                    JSONArray jsonArray = new JSONArray(buffer.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject json = jsonArray.getJSONObject(i);
+                        delegate.processFinish(json);
+                    }
+
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+
             }
         }
+
     }
-        // Se oculta la barra de carga
-        //carga.setVisibility(View.INVISIBLE);
-        /**try {
-            if (result) {
+    // Se oculta la barra de carga
+    //carga.setVisibility(View.INVISIBLE);
+    /**try {
+     if (result) {
 
-                if (accion.equals("registrar")) {
-                //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
-                    JSONObject jsonObject = new JSONObject(buffer.toString());
-                    String res = jsonObject.getString("registro");
-                    if (res.equals("1")) {
-                        Toast.makeText(activity, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(activity, "La cuenta ya existe", Toast.LENGTH_SHORT).show();
-                    }
-                }
+     if (accion.equals("registrar")) {
+     //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
+     JSONObject jsonObject = new JSONObject(buffer.toString());
+     String res = jsonObject.getString("registro");
+     if (res.equals("1")) {
+     Toast.makeText(activity, "Registro exitoso", Toast.LENGTH_SHORT).show();
+     } else {
+     Toast.makeText(activity, "La cuenta ya existe", Toast.LENGTH_SHORT).show();
+     }
+     }
 
-                if (accion.equals("eliminar")) {
-                //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
-                    JSONObject jsonObject = new JSONObject(buffer.toString());
-                    String res = jsonObject.getString("eliminar");
-                    if (res.equals("1")) {
-                        Toast.makeText(activity, "Se ha eliminado exitosamente", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(activity, "No existe", Toast.LENGTH_SHORT).show();
-                    }
-                }
+     if (accion.equals("eliminar")) {
+     //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
+     JSONObject jsonObject = new JSONObject(buffer.toString());
+     String res = jsonObject.getString("eliminar");
+     if (res.equals("1")) {
+     Toast.makeText(activity, "Se ha eliminado exitosamente", Toast.LENGTH_SHORT).show();
+     } else {
+     Toast.makeText(activity, "No existe", Toast.LENGTH_SHORT).show();
+     }
+     }
 
-                if (accion.equals("editar")) {
-                //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
-                    JSONObject jsonObject = new JSONObject(buffer.toString());
-                    String res = jsonObject.getString("editado");
-                    if (res.equals("1")) {
-                        Toast.makeText(activity, "Se ha consignado exitosamente", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
-                    }
-                }
+     if (accion.equals("editar")) {
+     //Como el resultado obtenido es un array JSON, se pasa el string JSON al array
+     JSONObject jsonObject = new JSONObject(buffer.toString());
+     String res = jsonObject.getString("editado");
+     if (res.equals("1")) {
+     Toast.makeText(activity, "Se ha consignado exitosamente", Toast.LENGTH_SHORT).show();
+     } else {
+     Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+     }
+     }
 
-              /**  if (accion.equals("buscar")) {
-                    //Como el resultado obtenido es un array json, se pasa
-                    JSONArray jsonArray = new JSONArray(buffer.toString());
-                    // en string json a JSONArray
-                    if (jsonArray.length() == 0) {
-                        Toast.makeText(activity, "La cuenta no existe", Toast.LENGTH_SHORT).show();
-                        Consignar.encontrado = false;
-                    } else {
-                        //Se saca el objeto del array y se pasa a un objeto JSON
-                        JSONObject row = jsonArray.getJSONObject(0);
-                        Log.e("row", row.toString());
-                        //Se saca las variables del objeto
+     /**  if (accion.equals("buscar")) {
+     //Como el resultado obtenido es un array json, se pasa
+     JSONArray jsonArray = new JSONArray(buffer.toString());
+     // en string json a JSONArray
+     if (jsonArray.length() == 0) {
+     Toast.makeText(activity, "La cuenta no existe", Toast.LENGTH_SHORT).show();
+     Consignar.encontrado = false;
+     } else {
+     //Se saca el objeto del array y se pasa a un objeto JSON
+     JSONObject row = jsonArray.getJSONObject(0);
+     Log.e("row", row.toString());
+     //Se saca las variables del objeto
 
-                        double monto = row.getDouble("monto");
-                        Consignar.montoAcutal = monto;
-                        Consignar.encontrado = true;
+     double monto = row.getDouble("monto");
+     Consignar.montoAcutal = monto;
+     Consignar.encontrado = true;
 
-                    }
-                }
+     }
+     }
 
-                if (accion.equals("listar")) {
+     if (accion.equals("listar")) {
 
-                    JSONArray jsonArray = new JSONArray(buffer.toString());
-                    //ArrayList<Cuenta> cuentas = new ArrayList<>();
+     JSONArray jsonArray = new JSONArray(buffer.toString());
+     //ArrayList<Cuenta> cuentas = new ArrayList<>();
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject row = jsonArray.getJSONObject(i);
+     for (int i = 0; i < jsonArray.length(); i++) {
+     JSONObject row = jsonArray.getJSONObject(i);
 
-                        int cod = row.getInt("codigo");
-                        double monto = row.getDouble("monto");
-                        String tipo = row.getString("tipo");
+     int cod = row.getInt("codigo");
+     double monto = row.getDouble("monto");
+     String tipo = row.getString("tipo");
 
-                        /**Cuenta c = new Cuenta(cod, monto, tipo);
-                        cuentas.add(c);
-                    }
+     /**Cuenta c = new Cuenta(cod, monto, tipo);
+     cuentas.add(c);
+     }
 
-                }
+     }
 
-            } else {
-                Toast.makeText(activity, "Error en la operación", Toast.LENGTH_SHORT).show();
-            }
-        } catch (JSONException e) {
-            Toast.makeText(activity, "Error tratando el resultado " + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-    } **/
+     } else {
+     Toast.makeText(activity, "Error en la operación", Toast.LENGTH_SHORT).show();
+     }
+     } catch (JSONException e) {
+     Toast.makeText(activity, "Error tratando el resultado " + e.getMessage(),
+     Toast.LENGTH_SHORT).show();
+     e.printStackTrace();
+     }
+     } **/
 
 }

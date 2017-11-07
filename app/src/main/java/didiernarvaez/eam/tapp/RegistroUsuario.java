@@ -1,11 +1,14 @@
 package didiernarvaez.eam.tapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,6 +32,7 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
         etCelular = (EditText) findViewById(R.id.etCelular);
         etUserName = (EditText) findViewById(R.id.etUserNameReg);
         etPassword = (EditText) findViewById(R.id.etPassReg);
+
 
     }
 
@@ -54,8 +58,23 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
 
     @Override
     public void processFinish(JSONObject output) throws JSONException {
-        if (output.getString("registro").equals("1")){
-            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+        String res = output.getString("registro");
+        Log.e("query", res);
+
+        if (res.equals("1")){
+            Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+
+            etNombre.setText("");
+            etCelular.setText("");
+            etApellido.setText("");
+            etCorreo.setText("");
+            etPassword.setText("");
+            etUserName.setText("");
         }
+    }
+
+    @Override
+    public void arrayProcessFinish(JSONArray jsonArray) throws JSONException {
+
     }
 }

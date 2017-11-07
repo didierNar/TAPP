@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +36,11 @@ public class  MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public void processFinish(JSONObject output) throws JSONException {
+
+    }
+
+    @Override
+    public void arrayProcessFinish(JSONArray jsonArray) throws JSONException {
 
     }
 }

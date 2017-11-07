@@ -1,11 +1,14 @@
 package didiernarvaez.eam.tapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,9 +48,19 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
 
     @Override
     public void processFinish(JSONObject output) throws JSONException {
-        if (output.getString("registro").equals("1")){
-            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+
+        String res = output.getString("registro");
+        Log.e(res, " respuestaaaaaaaaaaa");
+
+        if (res.equals("1")){
+            Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
         }
+    }
+
+    @Override
+    public void arrayProcessFinish(JSONArray jsonArray) throws JSONException {
+
     }
 
 

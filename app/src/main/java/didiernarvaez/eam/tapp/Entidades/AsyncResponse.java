@@ -1,5 +1,6 @@
 package didiernarvaez.eam.tapp.Entidades;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,4 +10,6 @@ import org.json.JSONObject;
 
 public interface AsyncResponse {
     void processFinish(JSONObject output) throws JSONException;
+
+    void arrayProcessFinish(JSONArray jsonArray) throws JSONException;
 }
