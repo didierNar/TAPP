@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -160,22 +161,19 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean> {
             try {
 
                 String res = buffer.toString();
-                JSONObject jsonRes = new JSONObject(res);
+                Object json = new JSONTokener(res).nextValue();
 
-
-
-                if (jsonRes.has("registro")) {
-
-                    Log.e("query", "EntroObject");
+                if (json instanceof JSONObject) {
+                    JSONObject jsonRes = new JSONObject(res);
                     delegate.processFinish(jsonRes);
+                } else if (json instanceof JSONArray) {
 
-                } else {
-
-                    JSONArray jsonArray = new JSONArray(buffer.toString());
-                    Log.e("query", "EntroArray");
+                    JSONArray jsonArray = new JSONArray(res);
                     delegate.processFinishList(jsonArray);
 
                 }
+
+
             } catch (JSONException e) {
 
             }
