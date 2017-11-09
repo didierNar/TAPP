@@ -3,6 +3,8 @@ package didiernarvaez.eam.tapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import didiernarvaez.eam.tapp.R;
+
 public class CalificarConductor extends AppCompatActivity {
 
     @Override
