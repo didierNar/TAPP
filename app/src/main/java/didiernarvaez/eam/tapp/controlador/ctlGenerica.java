@@ -158,20 +158,22 @@ public class ctlGenerica extends AsyncTask<Void, String, Boolean> {
     protected void onPostExecute(Boolean result) {
         if (result) {
             try {
+
                 String res = buffer.toString();
                 JSONObject jsonRes = new JSONObject(res);
 
+
+
                 if (jsonRes.has("registro")) {
 
+                    Log.e("query", "EntroObject");
                     delegate.processFinish(jsonRes);
 
                 } else {
 
                     JSONArray jsonArray = new JSONArray(buffer.toString());
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject json = jsonArray.getJSONObject(i);
-                        delegate.processFinish(json);
-                    }
+                    Log.e("query", "EntroArray");
+                    delegate.processFinishList(jsonArray);
 
                 }
             } catch (JSONException e) {

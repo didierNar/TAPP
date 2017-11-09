@@ -57,7 +57,7 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
         String res = output.getString("registro");
 
         if (res.equals("1")){
-            Intent intent = new Intent(this, MenuActivity.class);
+            Intent intent = new Intent(this, RegistroUsuario.class);
             startActivity(intent);
         } else {
             Toast.makeText(this, "El nombre de usuario o contraseña estan erroneas", Toast.LENGTH_SHORT).show();
@@ -66,6 +66,15 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
 
     @Override
     public void processFinishList(JSONArray output) throws JSONException {
+
+        if(!output.isNull(0)){
+
+            Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
+
+        }else{
+            Toast.makeText(this, "El nombre de usuario o contraseña estan erroneas", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
