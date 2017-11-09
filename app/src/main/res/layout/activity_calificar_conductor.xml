@@ -9,7 +9,8 @@
     android:orientation="vertical"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="didiernarvaez.eam.tapp.CalificarConductor"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/background">
 
     <Space
         android:layout_width="match_parent"
@@ -18,10 +19,11 @@
         android:layout_weight="0.09" />
 
     <EditText
+        android:id="@+id/etDescripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText3"
-        android:layout_weight="0.07" />
+        android:layout_weight="0.07"
+        android:hint="Descripcion" />
 
     <Space
         android:layout_width="match_parent"
@@ -29,12 +31,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.09" />
 
-    <EditText
+    <Spinner
+        android:id="@+id/cbCalificacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editText4"
         android:layout_weight="0.09" />
 
     <Space
@@ -42,9 +42,9 @@
         android:layout_height="20px" />
 
     <Spinner
+        android:id="@+id/cbConductor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.09" />
 </LinearLayout>

@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import didiernarvaez.eam.tapp.Entidades.AsyncResponse;
 import didiernarvaez.eam.tapp.Entidades.LogIn;
+import didiernarvaez.eam.tapp.Entidades.UsuarioLogIn;
 import didiernarvaez.eam.tapp.controlador.ctlGenerica;
 
 public class LogInActivity extends AppCompatActivity implements AsyncResponse{
@@ -20,6 +21,8 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
     EditText etUserName, etPassword;
 
     ctlGenerica controller;
+
+    static String nombreUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
 
         if(!output.isNull(0)){
 
+            UsuarioLogIn.setUserNameLog(etUserName.getText().toString());
             Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
 
