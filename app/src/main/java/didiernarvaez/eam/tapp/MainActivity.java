@@ -34,6 +34,10 @@ public class  MainActivity extends AppCompatActivity implements AsyncResponse {
         startActivity(i);
     }
 
+    public void Calificar(View v){
+        Intent i = new Intent(this, CalificarConductor.class);
+        startActivity(i);
+    }
     @Override
     public void processFinish(JSONObject output) throws JSONException {
 
