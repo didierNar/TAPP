@@ -1,5 +1,6 @@
 package didiernarvaez.eam.tapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,12 +24,15 @@ public class VentanaPrincipalActivity extends AppCompatActivity
     private static final int GPS_ERRORDIALOG_REQUEST = 9001;
     GoogleMap mMap;
     MapView mMapView;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mMapView = (MapView) findViewById(R.id.mapViewPrinci);
+
+        fab = (FloatingActionButton) findViewById(R.id.mostrarRutas);
 
         //mMapView.onCreate(savedInstanceState);
 
@@ -45,6 +49,7 @@ public class VentanaPrincipalActivity extends AppCompatActivity
             }
         });
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -53,6 +58,17 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void logInEmerjente() {
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(VentanaPrincipalActivity.this, LogInActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -93,18 +109,20 @@ public class VentanaPrincipalActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.mostrarRutas) {
+
+        } else if (id == R.id.rutaEspecifica) {
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.fotosParadero) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.registrar) {
+            Intent intent = new Intent(VentanaPrincipalActivity.this, RegistroUsuario.class);
+            startActivity(intent);
+        } else if (id == R.id.iniciarSesion) {
+            Intent intent = new Intent(VentanaPrincipalActivity.this, LogInActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,34 +131,29 @@ public class VentanaPrincipalActivity extends AppCompatActivity
     }
 
     /**
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
+     @Override protected void onPause() {
+     super.onPause();
+     mMapView.onPause();
+     }
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
-    }
+     @Override public void onLowMemory() {
+     super.onLowMemory();
+     mMapView.onLowMemory();
+     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
+     @Override protected void onDestroy() {
+     super.onDestroy();
+     mMapView.onDestroy();
+     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
+     @Override protected void onResume() {
+     super.onResume();
+     mMapView.onResume();
+     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMapView.onSaveInstanceState(outState);
-    }
-    */
+     @Override protected void onSaveInstanceState(Bundle outState) {
+     super.onSaveInstanceState(outState);
+     mMapView.onSaveInstanceState(outState);
+     }
+     */
 }
