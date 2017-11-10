@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mostrarRutas"
+            android:icon="@drawable/rutasencontrar"
+            android:title="Mostrar Todas las Rutas" />
+        <item
+            android:id="@+id/rutaEspecifica"
+            android:icon="@drawable/ruta"
+            android:title="Mostrar una Ruta Especifica" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Slideshow" />
+        <item
+            android:id="@+id/fotosParadero"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Subir fotos de un paradero" />
+    </group>
+
+    <item android:title="Sesion">
+        <menu>
+            <item
+                android:id="@+id/registrar"
+                android:icon="@drawable/registro"
+                android:title="Crear Cuenta" />
+            <item
+                android:id="@+id/iniciarSesion"
+                android:icon="@drawable/iniciosesion"
+                android:title="Iniciar Sesion" />
+        </menu>
+    </item>
+
+</menu>

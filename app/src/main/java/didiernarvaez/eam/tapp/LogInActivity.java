@@ -22,8 +22,6 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
 
     ctlGenerica controller;
 
-    static String nombreUsuario;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +58,7 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
         String res = output.getString("registro");
 
         if (res.equals("1")){
+            UsuarioLogIn.setUserNameLog(etUserName.getText().toString());
             Intent intent = new Intent(this, RegistroUsuario.class);
             startActivity(intent);
         } else {
