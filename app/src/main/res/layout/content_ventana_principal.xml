@@ -8,9 +8,12 @@
     tools:context="didiernarvaez.eam.tapp.VentanaPrincipalActivity"
     tools:showIn="@layout/app_bar_ventana_principal">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapViewPrinci"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+    <FrameLayout
+        android:id="@+id/primerFragmento"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+
 </LinearLayout>
