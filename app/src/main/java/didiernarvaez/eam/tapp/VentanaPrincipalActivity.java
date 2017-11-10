@@ -16,27 +16,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import didiernarvaez.eam.tapp.Fragmentos.FragmentoPrincipal;
 
 public class VentanaPrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback  {
 
-    private static final int GPS_ERRORDIALOG_REQUEST = 9001;
-    GoogleMap mMap;
-    MapView mMapView;
-    FloatingActionButton fab;
+    SupportMapFragment supportMapFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMapView = (MapView) findViewById(R.id.mapViewPrinci);
-
-        fab = (FloatingActionButton) findViewById(R.id.mostrarRutas);
-
-        //mMapView.onCreate(savedInstanceState);
+        supportMapFragment = SupportMapFragment.newInstance();
 
         setContentView(R.layout.activity_ventana_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,17 +59,8 @@ public class VentanaPrincipalActivity extends AppCompatActivity
         FragmentManager manager = getFragmentManager();
         manager.beginTransaction().replace(R.id.primerFragmento, new FragmentoPrincipal()).commit();
 
-    }
+        supportMapFragment.getMapAsync(this);
 
-    public void logInEmerjente() {
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(VentanaPrincipalActivity.this, LogInActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -113,9 +99,13 @@ public class VentanaPrincipalActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
+        android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
+
         int id = item.getItemId();
 
         if (id == R.id.mostrarRutas) {
+            //sFm.beginTransaction().replace(R.id.fragmentoMapa, supportMapFragment).commit();
 
         } else if (id == R.id.rutaEspecifica) {
 
@@ -136,30 +126,8 @@ public class VentanaPrincipalActivity extends AppCompatActivity
         return true;
     }
 
-    /**
-     @Override protected void onPause() {
-     super.onPause();
-     mMapView.onPause();
-     }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
 
-     @Override public void onLowMemory() {
-     super.onLowMemory();
-     mMapView.onLowMemory();
-     }
-
-     @Override protected void onDestroy() {
-     super.onDestroy();
-     mMapView.onDestroy();
-     }
-
-     @Override protected void onResume() {
-     super.onResume();
-     mMapView.onResume();
-     }
-
-     @Override protected void onSaveInstanceState(Bundle outState) {
-     super.onSaveInstanceState(outState);
-     mMapView.onSaveInstanceState(outState);
-     }
-     */
+    }
 }
