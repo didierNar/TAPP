@@ -56,10 +56,11 @@ public class VentanaPrincipalActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FragmentManager manager = getFragmentManager();
-        manager.beginTransaction().replace(R.id.primerFragmento, new FragmentoPrincipal()).commit();
-
         supportMapFragment.getMapAsync(this);
+
+        android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
+
+        sFm.beginTransaction().replace(R.id.fragmentoMapa, supportMapFragment).commit();
 
     }
 
@@ -100,12 +101,12 @@ public class VentanaPrincipalActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
-        android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
+
 
         int id = item.getItemId();
 
         if (id == R.id.mostrarRutas) {
-            //sFm.beginTransaction().replace(R.id.fragmentoMapa, supportMapFragment).commit();
+
 
         } else if (id == R.id.rutaEspecifica) {
 
