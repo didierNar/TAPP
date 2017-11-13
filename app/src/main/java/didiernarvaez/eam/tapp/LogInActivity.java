@@ -72,7 +72,7 @@ public class LogInActivity extends AppCompatActivity implements AsyncResponse{
         if(!output.isNull(0)){
 
             UsuarioLogIn.setUserNameLog(etUserName.getText().toString());
-            Intent intent = new Intent(this, MenuActivity.class);
+            Intent intent = new Intent(this, VentanaPrincipalActivity.class);
             startActivity(intent);
 
         }else{
