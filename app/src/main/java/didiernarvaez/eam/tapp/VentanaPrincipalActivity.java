@@ -38,6 +38,8 @@ import java.util.List;
 import didiernarvaez.eam.tapp.Entidades.AsyncResponse;
 import didiernarvaez.eam.tapp.Entidades.Paradero;
 import didiernarvaez.eam.tapp.Entidades.RutaBus;
+import didiernarvaez.eam.tapp.Entidades.RutasFavoritas;
+import didiernarvaez.eam.tapp.Entidades.UserFavoritas;
 import didiernarvaez.eam.tapp.Entidades.UsuarioLogIn;
 import didiernarvaez.eam.tapp.controlador.ctlGenerica;
 
@@ -55,11 +57,15 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
     private List<RutaBus> rutas;
 
+    private List<RutasFavoritas> rutasFavoritas;
+
     ctlGenerica controller;
 
     boolean pa = false;
 
     boolean ru = false;
+
+    boolean fav = false;
 
     private static final float LIMITE_SENSIBILIDAD_SACUDIDA = 1.4f;
 
@@ -174,7 +180,40 @@ public class VentanaPrincipalActivity extends AppCompatActivity
             marcarMapaRutas(rutas);
             ru = false;
         }
+        if(fav){
+            marcaMapaRutasFavoritas(rutasFavoritas);
+        }
 
+
+    }
+
+    public void listaRutasFavoritas(){
+
+        UserFavoritas u = new UserFavoritas(UsuarioLogIn.getUserNameLog());
+
+        controller = new ctlGenerica(u, "ListarRutasFavoritas");
+        controller.delegate= this;
+        controller.execute();
+
+    }
+
+    public void marcaMapaRutasFavoritas(List<RutasFavoritas> rf){
+
+        if(!rf.isEmpty()){
+
+            mMap.clear();
+            for (int i = 0; i < rf.size(); i++) {
+
+                RutasFavoritas rutF = rf.get(i);
+                double latitud = rutF.getLat();
+                double lon = rutF.getLon();
+                String tipo = rutF.getTipo();
+
+                mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, lon))
+                        .title(tipo).icon(BitmapDescriptorFactory.fromResource(R.drawable.rutasencontrar)));
+
+            }
+        }
 
     }
 
@@ -321,7 +360,7 @@ public class VentanaPrincipalActivity extends AppCompatActivity
             Intent inntent = new Intent(VentanaPrincipalActivity.this, RegistroRutasFavoritasActivity.class);
             startActivity(inntent);
         } else if (id == R.id.mostrarRutasFavoritas){
-
+            listaRutasFavoritas();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -368,6 +407,7 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
             paraderos = new ArrayList<>();
             rutas = new ArrayList<>();
+            rutasFavoritas = new ArrayList<>();
 
             for (int i = 0; i < output.length(); i++) {
 
@@ -397,6 +437,19 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
                     RutaBus rut = new RutaBus(id, destino, origen, numero, lat, lon, tipo);
                     rutas.add(rut);
+
+                }
+                if(tipo.equals("FAVORITA")){
+
+                    fav = true;
+                    String destino = row.getString("DESTINO");
+                    String origen = row.getString("ORIGEN");
+                    String numero = row.getString("NUMERO");
+                    double lat = row.getDouble("LATITUD");
+                    double lon = row.getDouble("LONGITUD");
+
+                    RutasFavoritas rutFav = new RutasFavoritas(destino, origen, numero, lat, lon, tipo);
+                    rutasFavoritas.add(rutFav);
 
                 }
 
@@ -471,7 +524,11 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
             //Si supera el limite establecido, suena el audio
             if (gForce > LIMITE_SENSIBILIDAD_SACUDIDA) {
-                listarParaderos();
+                if(UsuarioLogIn.getUserNameLog() == null) {
+                    listarParaderos();
+                } else {
+                    listaRutasFavoritas();
+                }
             }
         }
     }
