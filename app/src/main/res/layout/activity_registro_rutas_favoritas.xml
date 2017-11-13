@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context="didiernarvaez.eam.tapp.RegistroRutasFavoritasActivity">
+
+    <TextView
+        android:id="@+id/vistaRutas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="REGISTRO RUTAS FAVORITAS"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/cbRutas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:background="#FDFDFD"
+        android:text="Registrar Ruta"
+        android:textColor="#010101"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:onClick="registrarRutaFavorita"/>
+
+</LinearLayout>

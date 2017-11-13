@@ -18,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".RegistroUsuario" />
         <activity android:name=".LogInActivity" />
         <activity android:name=".MenuActivity" />
@@ -42,7 +42,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDU3xpMXlbl5NnT8pNAZQDhfi_cImrhjYA" />
 
-        <activity android:name=".SubirFotosActivity"></activity>
+        <activity android:name=".SubirFotosActivity" />
+        <activity android:name=".RegistroRutasFavoritasActivity"></activity>
     </application>
 
 </manifest>

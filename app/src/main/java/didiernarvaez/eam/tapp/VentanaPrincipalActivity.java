@@ -2,6 +2,10 @@ package didiernarvaez.eam.tapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -38,11 +42,12 @@ import didiernarvaez.eam.tapp.Entidades.UsuarioLogIn;
 import didiernarvaez.eam.tapp.controlador.ctlGenerica;
 
 public class VentanaPrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, AsyncResponse, GoogleMap.OnMarkerClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, AsyncResponse,
+        GoogleMap.OnMarkerClickListener, SensorEventListener {
 
     SupportMapFragment supportMapFragment;
 
-    private final LatLng eam = new LatLng(4.541763, -75.663464);
+    private final LatLng inicio = new LatLng(4.541763, -75.663464);
 
     private GoogleMap mMap;
 
@@ -56,9 +61,29 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
     boolean ru = false;
 
+    private static final float LIMITE_SENSIBILIDAD_SACUDIDA = 1.4f;
+
+    private static final int LIMITE_TIEMPO_MS_SACUDIDA = 250;
+
+    private long tiempoSacudida = 0;
+
+    Sensor s;
+
+    SensorManager sensorM;
+
+    private Sensor sensorAcelerometro;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //se define el administrador de sensores
+        sensorM = (SensorManager) getSystemService(SENSOR_SERVICE);
+        //Acelerometro
+        sensorAcelerometro = sensorM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        //se agrega el administrador de sensores
+        sensorM.registerListener(VentanaPrincipalActivity.this,s, SensorManager.SENSOR_DELAY_NORMAL);
 
         supportMapFragment = SupportMapFragment.newInstance();
 
@@ -97,6 +122,23 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
     }
 
+    /*Tan pronto se activan los sensores, se asocian al gestionador de sensores*/
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*Se asocia el acelerometro al administrador*/
+        sensorM.registerListener(this, sensorAcelerometro, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    /*Cuando se pausa un sensor*/
+    @Override
+    protected void onPause() {
+        /*Si se pausa, se des-asocia del administrador de sensores*/
+        super.onPause();
+        /*El this es el sensor que se pauso*/
+        sensorM.unregisterListener(this);
+    }
+
     public void validarOpciones(Menu menu) {
 
         if (UsuarioLogIn.getUserNameLog() == null) {
@@ -104,6 +146,8 @@ public class VentanaPrincipalActivity extends AppCompatActivity
             menu.findItem(R.id.fotosParadero).setVisible(false);
             menu.findItem(R.id.calificarConductor).setVisible(false);
             menu.findItem(R.id.cerrarSesion).setVisible(false);
+            menu.findItem(R.id.mostrarRutasFavoritas).setVisible(false);
+            menu.findItem(R.id.rutasFavoritas).setVisible(false);
             menu.findItem(R.id.iniciarSesion).setVisible(true);
             menu.findItem(R.id.registrar).setVisible(true);
 
@@ -112,6 +156,8 @@ public class VentanaPrincipalActivity extends AppCompatActivity
             menu.findItem(R.id.fotosParadero).setVisible(true);
             menu.findItem(R.id.calificarConductor).setVisible(true);
             menu.findItem(R.id.cerrarSesion).setVisible(true);
+            menu.findItem(R.id.mostrarRutasFavoritas).setVisible(true);
+            menu.findItem(R.id.rutasFavoritas).setVisible(true);
             menu.findItem(R.id.iniciarSesion).setVisible(false);
             menu.findItem(R.id.registrar).setVisible(false);
 
@@ -184,15 +230,21 @@ public class VentanaPrincipalActivity extends AppCompatActivity
                 double lat = rut.getLat();
                 double lon = rut.getLon();
                 String tip = rut.getTipo();
-                String num = rut.getNumero();
+                //String num = rut.getNumero();
 
                 Marker mar = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(tip));
+                mar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.rutasencontrar));
 
+                /**
                 if(num.equals("1")){
                     mar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.uno));
-                }else{
+                }
+                if(num.equals("4")){
+                    mar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.cuatro));
+                } else {
                     mar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.rutasencontrar));
                 }
+                */
             }
         }
 
@@ -265,6 +317,11 @@ public class VentanaPrincipalActivity extends AppCompatActivity
             UsuarioLogIn.setUserNameLog(null);
             Intent intent = new Intent(VentanaPrincipalActivity.this, VentanaPrincipalActivity.class);
             startActivity(intent);
+        } else if(id == R.id.rutasFavoritas){
+            Intent inntent = new Intent(VentanaPrincipalActivity.this, RegistroRutasFavoritasActivity.class);
+            startActivity(inntent);
+        } else if (id == R.id.mostrarRutasFavoritas){
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -277,7 +334,7 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
         mMap = googleMap;
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eam, 14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(inicio, 14));
 
         miPosicionActual();
 
@@ -336,8 +393,9 @@ public class VentanaPrincipalActivity extends AppCompatActivity
                     String numero = row.getString("NUMERO");
                     double lat = row.getDouble("LATITUD");
                     double lon = row.getDouble("LONGITUD");
+                    int id = row.getInt("ID");
 
-                    RutaBus rut = new RutaBus(destino, origen, numero, lat, lon, tipo);
+                    RutaBus rut = new RutaBus(id, destino, origen, numero, lat, lon, tipo);
                     rutas.add(rut);
 
                 }
@@ -370,5 +428,51 @@ public class VentanaPrincipalActivity extends AppCompatActivity
         }
 
         return false;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            detectShake(sensorEvent);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    /**
+     * Detecta una sacudida a partir del acelerometro
+     */
+    private void detectShake(SensorEvent event) {
+
+        /*Se captura el tiempo actual*/
+        long now = System.currentTimeMillis();
+
+        /*Si esta sacudida supera el tiempo estipulado para la proxima sacudida*/
+        if ((now - tiempoSacudida) > LIMITE_TIEMPO_MS_SACUDIDA) {
+
+            /*Se almacena para ser utilizado en una proxima sacudida*/
+            tiempoSacudida = now;
+
+            /*Se obtiene el movimiento en X, Y, Z y se divide por la gravedad para detercar una
+            *  sacudida*/
+            float gX = event.values[0] / SensorManager.GRAVITY_EARTH;
+            float gY = event.values[1] / SensorManager.GRAVITY_EARTH;
+            float gZ = event.values[2] / SensorManager.GRAVITY_EARTH;
+
+            float posicionx = event.values[0];
+            float posiciony = event.values[SensorManager.AXIS_Y];
+
+            /*Se calcula con la operacion matematica el cambio gravitacional*/
+            double gForce = Math.sqrt(gX * gX + gY * gY + gZ * gZ);
+
+            //Si supera el limite establecido, suena el audio
+            if (gForce > LIMITE_SENSIBILIDAD_SACUDIDA) {
+                listarParaderos();
+            }
+        }
     }
 }

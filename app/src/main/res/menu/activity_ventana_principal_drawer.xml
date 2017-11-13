@@ -21,6 +21,16 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Subir fotos de un paradero"
             android:visible="false"/>
+        <item
+            android:id="@+id/mostrarRutasFavoritas"
+            android:icon="@drawable/rutasencontrar"
+            android:title="Mostrar Rutas Favoritas"
+            android:visible="false"/>
+        <item
+            android:id="@+id/rutasFavoritas"
+            android:icon="@drawable/favorita"
+            android:title="Agregar Ruta Favorita"
+            android:visible="false"/>
     </group>
 
     <item android:title="Sesion">

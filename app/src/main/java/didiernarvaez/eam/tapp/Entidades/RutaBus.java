@@ -6,6 +6,8 @@ package didiernarvaez.eam.tapp.Entidades;
 
 public class RutaBus {
 
+    private int id;
+
     private String destino;
 
     private String origen;
@@ -18,13 +20,22 @@ public class RutaBus {
 
     private String tipo;
 
-    public RutaBus(String destino, String origen, String numero, double lat, double lon, String tipo) {
+    public RutaBus(int id, String destino, String origen, String numero, double lat, double lon, String tipo) {
+        this.id = id;
         this.destino = destino;
         this.origen = origen;
         this.numero = numero;
         this.lat = lat;
         this.lon = lon;
         this.tipo = tipo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDestino() {
@@ -73,5 +84,10 @@ public class RutaBus {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public String toString() {
+        return "Ruta: " + numero;
     }
 }
