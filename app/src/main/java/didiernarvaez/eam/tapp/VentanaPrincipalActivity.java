@@ -239,9 +239,10 @@ public class VentanaPrincipalActivity extends AppCompatActivity
                 double latitud = par.getLatitud();
                 double lon = par.getLongitud();
                 String tipo = par.getTipo();
+                String nom = par.getNombre();
 
                 mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, lon))
-                        .title(tipo).icon(BitmapDescriptorFactory.fromResource(R.drawable.paradero)));
+                        .title(tipo+ " " + nom).icon(BitmapDescriptorFactory.fromResource(R.drawable.paradero)));
 
             }
         }
@@ -269,21 +270,11 @@ public class VentanaPrincipalActivity extends AppCompatActivity
                 double lat = rut.getLat();
                 double lon = rut.getLon();
                 String tip = rut.getTipo();
-                //String num = rut.getNumero();
+                String num = rut.getNumero();
 
-                Marker mar = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(tip));
+                Marker mar = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(tip + " " + num));
                 mar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.rutasencontrar));
-
-                /**
-                if(num.equals("1")){
-                    mar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.uno));
-                }
-                if(num.equals("4")){
-                    mar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.cuatro));
-                } else {
-                    mar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.rutasencontrar));
-                }
-                */
+                
             }
         }
 
@@ -400,7 +391,6 @@ public class VentanaPrincipalActivity extends AppCompatActivity
 
         if (output.isNull(0)) {
 
-            Toast.makeText(this, "Sucedio un error", Toast.LENGTH_SHORT).show();
 
         } else {
 
@@ -525,7 +515,7 @@ public class VentanaPrincipalActivity extends AppCompatActivity
             //Si supera el limite establecido, suena el audio
             if (gForce > LIMITE_SENSIBILIDAD_SACUDIDA) {
                 if(UsuarioLogIn.getUserNameLog() == null) {
-                    listarParaderos();
+                    listarPosicionBuses();
                 } else {
                     listaRutasFavoritas();
                 }

@@ -43,7 +43,8 @@
             android:value="AIzaSyDU3xpMXlbl5NnT8pNAZQDhfi_cImrhjYA" />
 
         <activity android:name=".SubirFotosActivity" />
-        <activity android:name=".RegistroRutasFavoritasActivity"></activity>
+        <activity android:name=".RegistroRutasFavoritasActivity" />
+        <activity android:name=".ImagenCompletaActivity"></activity>
     </application>
 
 </manifest>

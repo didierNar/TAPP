@@ -44,8 +44,9 @@ public class RegistroRutasFavoritasActivity extends AppCompatActivity implements
     public void registrarRutaFavorita (View view){
 
         RutaBus ruta = (RutaBus) rutas.getSelectedItem();
+        String tipo = "FAVORITA";
 
-        RegistroRutas reg = new RegistroRutas(ruta.getId(), UsuarioLogIn.getUserNameLog());
+        RegistroRutas reg = new RegistroRutas(ruta.getId(), UsuarioLogIn.getUserNameLog(), tipo);
         controller = new ctlGenerica(reg, "RegistroRutaFavorita");
         controller.delegate = this;
         controller.execute();

@@ -10,9 +10,12 @@ public class RegistroRutas {
 
     private String nomUsuario;
 
-    public RegistroRutas(int rutaId, String nomUsuario) {
+    private String tipo;
+
+    public RegistroRutas(int rutaId, String nomUsuario, String tipo) {
         this.rutaId = rutaId;
         this.nomUsuario = nomUsuario;
+        this.tipo = tipo;
     }
 
     public int getRutaId() {
@@ -29,5 +32,13 @@ public class RegistroRutas {
 
     public void setNomUsuario(String nomUsuario) {
         this.nomUsuario = nomUsuario;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

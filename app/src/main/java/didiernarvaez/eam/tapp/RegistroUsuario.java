@@ -72,6 +72,9 @@ public class RegistroUsuario extends AppCompatActivity implements AsyncResponse 
             etCorreo.setText("");
             etPassword.setText("");
             etUserName.setText("");
+
+            Intent intent = new Intent(RegistroUsuario.this, VentanaPrincipalActivity.class);
+            startActivity(intent);
         } else{
             Toast.makeText(this, "Registro Fallido", Toast.LENGTH_SHORT).show();
         }
